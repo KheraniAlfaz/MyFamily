@@ -9,4 +9,6 @@
     <dimen name="image_height">96dp</dimen>
     <dimen name="card_height">180dp</dimen>
     <dimen name="card_elevation">16dp</dimen>
+    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
 </resources>
