@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_margin">16dp</dimen>
+    <dimen name="header_size_18_sp">18sp</dimen>
+    <dimen name="border_radius_16dp">16dp</dimen>
+    <dimen name="card_header_24_sp">24sp</dimen>
+    <dimen name="elevation_8_dp">16dp</dimen>
+    <dimen name="image_width">96dp</dimen>
+    <dimen name="image_height">96dp</dimen>
+    <dimen name="card_height">180dp</dimen>
+    <dimen name="card_elevation">16dp</dimen>
+</resources>
