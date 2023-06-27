@@ -1,6 +1,7 @@
 package com.example.myfamily
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -19,6 +20,8 @@ import kotlinx.coroutines.withContext
 class HomeFragment : Fragment() {
 
     private val listContacts : ArrayList<ContactModel> = ArrayList()
+    lateinit var  inviteAdapter : InviteAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d("FetchContacts", "onViewCreated: ")
 
         val listMembers = listOf<MemberModel>(
             MemberModel(
@@ -70,23 +75,22 @@ class HomeFragment : Fragment() {
         recycler.adapter = adapter
 
 
+        Log.d("FetchContacts", "fetchContacts: is going to start")
 
+        Log.d("FetchContacts", "fetchContacts: is now started. listcontacts = ${listContacts.size}")
 
+        inviteAdapter = InviteAdapter(listContacts)
+        fetchDatabaseContacts()
 
-
-        val inviteAdapter = InviteAdapter(listContacts)
+        Log.d("FetchContacts", "fetchContacts: has now ended")
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            listContacts.addAll(fetchContacts())
-            insertDatabaseContacts(listContacts)
+            Log.d("FetchContacts", "fetchContacts: coroutine start")
 
+            insertDatabaseContacts(fetchContacts())
 
-            withContext(Dispatchers.Main){
-
-                inviteAdapter.notifyDataSetChanged()
-
-            }
+            Log.d("FetchContacts", "fetchContacts: coroutine end. listcontacts = ${listContacts.size}")
 
         }
 
@@ -96,6 +100,22 @@ class HomeFragment : Fragment() {
         val inviterecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
         inviterecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         inviterecycler.adapter = inviteAdapter
+    }
+
+    private fun fetchDatabaseContacts(): Void? {
+        val database = MyFamilyDatabase.getDatabase(requireContext())
+
+        database.contactDAO().getAllContacts().observe(viewLifecycleOwner){
+
+            Log.d("FetchContacts", "fetchDatabaseContacts: ")
+
+            listContacts.clear()
+            listContacts.addAll(it)
+
+            inviteAdapter.notifyDataSetChanged()
+
+        }
+        return null
     }
 
     private suspend fun insertDatabaseContacts(listContacts: ArrayList<ContactModel>) {
@@ -150,7 +170,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        Log.d("FetchContacts", "fetchContacts: started")
+        Log.d("FetchContacts", "fetchContacts: ended")
 
         return listContacts
     }
