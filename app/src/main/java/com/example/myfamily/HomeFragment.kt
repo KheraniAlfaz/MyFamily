@@ -71,11 +71,16 @@ class HomeFragment : Fragment() {
 
 
 
+
+
+
         val inviteAdapter = InviteAdapter(listContacts)
 
         CoroutineScope(Dispatchers.IO).launch {
 
             listContacts.addAll(fetchContacts())
+            insertDatabaseContacts(listContacts)
+
 
             withContext(Dispatchers.Main){
 
@@ -91,6 +96,13 @@ class HomeFragment : Fragment() {
         val inviterecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
         inviterecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         inviterecycler.adapter = inviteAdapter
+    }
+
+    private suspend fun insertDatabaseContacts(listContacts: ArrayList<ContactModel>) {
+
+        val database = MyFamilyDatabase.getDatabase(requireContext())
+
+        database.contactDAO().insertAll(listContacts)
     }
 
     @SuppressLint("Range")
