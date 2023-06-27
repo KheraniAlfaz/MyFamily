@@ -13,7 +13,8 @@ class MainActivity : AppCompatActivity() {
 
     val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
-        android.Manifest.permission.CAMERA
+        android.Manifest.permission.CAMERA,
+        android.Manifest.permission.READ_CONTACTS
     )
     val permissionCode = 78
 
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         if(requestCode == permissionCode){
 
             if(allPermissionsGranted()){
-                openCamera()
+//                openCamera()
 
             }else{
 
