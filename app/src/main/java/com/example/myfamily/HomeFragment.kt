@@ -3,15 +3,22 @@ package com.example.myfamily
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class HomeFragment : Fragment() {
+
+    private val listContacts : ArrayList<ContactModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +71,22 @@ class HomeFragment : Fragment() {
 
 
 
-        val inviteAdapter = InviteAdapter(fetchContacts())
+        val inviteAdapter = InviteAdapter(listContacts)
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            listContacts.addAll(fetchContacts())
+
+            withContext(Dispatchers.Main){
+
+                inviteAdapter.notifyDataSetChanged()
+
+            }
+
+        }
+
+
+
 
         val inviterecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
         inviterecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
@@ -73,6 +95,9 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("Range")
     private fun fetchContacts(): ArrayList<ContactModel> {
+
+        Log.d("FetchContacts", "fetchContacts: started")
+
         val cr = requireActivity().contentResolver
         val cursor =  cr.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null)
 
@@ -112,6 +137,9 @@ class HomeFragment : Fragment() {
                 cursor.close()
             }
         }
+
+        Log.d("FetchContacts", "fetchContacts: started")
+
         return listContacts
     }
 
