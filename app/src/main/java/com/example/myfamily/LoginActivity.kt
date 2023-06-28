@@ -62,6 +62,8 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d("FireBase", "signInWithCredential:success")
 
+                    SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN,true)
+
                     val user = auth.currentUser
 
                     startActivity(Intent(this, MainActivity::class.java))

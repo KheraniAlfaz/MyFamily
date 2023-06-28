@@ -2,8 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyFamily" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/darker_grey</item>
+        <item name="colorPrimary">@color/darker_grey</item>
     </style>
 
     <style name="Theme.MyFamily" parent="Base.Theme.MyFamily" />
+    
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar" >
+
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+    </style>
 </resources>
