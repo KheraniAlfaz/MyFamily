@@ -21,4 +21,6 @@
     <string name="alfaz">Alfaz</string>
     <string name="invite_family_member">Invite Family Member</string>
     <string name="security">Security</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="default_web_client_id_auth">498824890988-1bb1iui374k2qv98qebih02c0f8na27s.apps.googleusercontent.com</string>
 </resources>
