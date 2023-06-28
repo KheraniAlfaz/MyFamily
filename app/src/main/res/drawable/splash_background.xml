@@ -4,7 +4,8 @@
     <item
         android:drawable="@drawable/bg_gradient"/>
     <item>
-        <bitmap android:gravity="center"
+        <bitmap
+            android:gravity="center"
             android:src="@drawable/splash_fg"/>
     </item>
 </layer-list>

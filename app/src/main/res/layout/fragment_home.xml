@@ -30,10 +30,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/icon_three_dots"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="@dimen/layout_margin"
-        android:src="@drawable/ic_options_header"
+        android:src="@drawable/ic_signout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

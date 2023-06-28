@@ -2,7 +2,7 @@ package com.example.myfamily
 
 import android.app.Application
 
-class MyFamiltyApplcation : Application() {
+class MyFamilyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

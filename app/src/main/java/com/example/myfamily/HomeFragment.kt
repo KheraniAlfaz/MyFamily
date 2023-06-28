@@ -1,20 +1,22 @@
 package com.example.myfamily
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class HomeFragment : Fragment() {
@@ -100,6 +102,17 @@ class HomeFragment : Fragment() {
         val inviterecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
         inviterecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         inviterecycler.adapter = inviteAdapter
+
+
+        val threeDots = requireView().findViewById<ImageView>(R.id.icon_three_dots)
+        threeDots.setOnClickListener {
+
+            SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN,false)
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(requireContext(), "Signed Out", Toast.LENGTH_LONG).show()
+            val i = Intent(activity, SplashScreen::class.java)
+            startActivity(i)
+        }
     }
 
     private fun fetchDatabaseContacts(): Void? {
