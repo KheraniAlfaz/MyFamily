@@ -1,6 +1,7 @@
 package com.example.myfamily
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -23,11 +24,17 @@ class HomeFragment : Fragment() {
 
     private val listContacts : ArrayList<ContactModel> = ArrayList()
     lateinit var  inviteAdapter : InviteAdapter
+    lateinit var mContext : Context
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
     override fun onCreateView(
@@ -73,7 +80,7 @@ class HomeFragment : Fragment() {
         val adapter = MemberAdapter(listMembers)
 
         val recycler = requireView().findViewById<RecyclerView>(R.id.recyler_view_member)
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+        recycler.layoutManager = LinearLayoutManager(mContext)
         recycler.adapter = adapter
 
 
@@ -100,7 +107,7 @@ class HomeFragment : Fragment() {
 
 
         val inviterecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
-        inviterecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        inviterecycler.layoutManager = LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false)
         inviterecycler.adapter = inviteAdapter
 
 
@@ -109,14 +116,14 @@ class HomeFragment : Fragment() {
 
             SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN,false)
             FirebaseAuth.getInstance().signOut()
-            Toast.makeText(requireContext(), "Signed Out", Toast.LENGTH_LONG).show()
+            Toast.makeText(mContext, "Signed Out", Toast.LENGTH_LONG).show()
             val i = Intent(activity, SplashScreen::class.java)
             startActivity(i)
         }
     }
 
     private fun fetchDatabaseContacts(): Void? {
-        val database = MyFamilyDatabase.getDatabase(requireContext())
+        val database = MyFamilyDatabase.getDatabase(mContext)
 
         database.contactDAO().getAllContacts().observe(viewLifecycleOwner){
 
@@ -133,7 +140,7 @@ class HomeFragment : Fragment() {
 
     private suspend fun insertDatabaseContacts(listContacts: ArrayList<ContactModel>) {
 
-        val database = MyFamilyDatabase.getDatabase(requireContext())
+        val database = MyFamilyDatabase.getDatabase(mContext)
 
         database.contactDAO().insertAll(listContacts)
     }

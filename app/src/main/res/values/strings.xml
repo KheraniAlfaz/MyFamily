@@ -23,4 +23,9 @@
     <string name="security">Security</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="default_web_client_id_auth">498824890988-9jd4kpk02remgngmkc33vp7f7ejl610t.apps.googleusercontent.com</string>
+    <string name="invite_mail_description">Enter email of a family member</string>
+    <string name="invite_button">INVITE</string>
+    <string name="invite_requests">Invite Requests :</string>
+    <string name="deny">Deny</string>
+    <string name="accept">Accept</string>
 </resources>
